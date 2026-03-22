@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Ti 🌻</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: black;
+  font-family: Arial;
+}
+
+/* estrellas */
+.estrella {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+}
+
+/* sol */
+.centro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  transform: translate(60%, 250%);
+  box-shadow: 0 0 60px yellow, 0 0 120px gold;
+}
+
+/* palabras */
+.palabra {
+  position: absolute;
+  color: #ffd700;
+  font-size: 10px;
+  white-space: nowrap;
+  text-shadow: 0 0 7px gold;
+}
+
+/* título */
+.titulo {
+  position: absolute;
+  top: 450px;
+  width: 170%;
+  text-align: center;
+  color: yellow;
+  font-size: 22px;
+}
+
+/* carta */
+.carta {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 0 20px gold;
+  transition: 0.5s;
+}
+
+.carta.mostrar {
+  transform: translate(-65%, -50%) scale(1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="titulo">🌻 Feliz Día de las Flores Amarillas 🌻</div>
+<div class="centro"></div>
+
+<div class="carta" id="carta">
+  <h3>💌 Para Ti 💌</h3>
+  <p>
+  Desde que llegaste a mi vida todo cambió 💛<br><br>
+  Eres mi felicidad, mi paz y mi motivo 🌻<br><br>
+  Gracias por existir, mi princesa hermosa 💖<br><br>
+  Te amo muchísimo ✨
+  </p>
+</div>
+
+<script>
+// estrellas
+for (let i = 0; i < 250; i++) {
+  let e = document.createElement("div");
+  e.className = "estrella";
+  e.style.top = Math.random()*200 + "vh";
+  e.style.left = Math.random()*200 + "vw";
+  document.body.appendChild(e);
+}
+
+// nombre
+const nombre = "Gabriela 💖";
+
+// mensajes
+const mensajes = [
+"🌻 Eres mi luz",
+"💛 Eres mi todo",
+"✨ Iluminas mi vida",
+"💫 Siempre brillas",
+"🌼 Me haces feliz",
+"💛 Eres especial",
+"🌻 Alegras mis días",
+"💛 lo eres todo para mi"
+];
+
+// centro pantalla
+let cx = window.innerWidth / 3;
+let cy = window.innerHeight / 2;
+let radio = 200;
+
+// palabras
+let elementos = [];
+
+for (let i = 0; i < 18; i++) {
+  let p = document.createElement("div");
+  p.className = "palabra";
+  p.innerText = mensajes[Math.floor(Math.random()*mensajes.length)] + " " + nombre;
+
+  document.body.appendChild(p);
+
+  elementos.push({
+    el: p,
+    angulo: (i / 28) * Math.PI * 3
+  });
+}
+
+// animación lenta y suave
+function animar() {
+  elementos.forEach(obj => {
+    obj.angulo += 0.001; // 👈 velocidad LENTA
+
+    let x = cx + Math.cos(obj.angulo) * radio;
+    let y = cy + Math.sin(obj.angulo) * radio;
+
+    obj.el.style.left = x + "px";
+    obj.el.style.top = y + "px";
+  });
+
+  requestAnimationFrame(animar);
+}
+
+animar();
+
+// doble toque → carta
+let ultimoToque = 0;
+
+document.body.addEventListener("touchstart", () => {
+  let ahora = new Date().getTime();
+
+  if (ahora - ultimoToque < 300) {
+    document.getElementById("carta").classList.add("mostrar");
+  }
+
+  ultimoToque = ahora;
+});
+</script>
+
+</body>
+</html>
